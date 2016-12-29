@@ -97,11 +97,7 @@ CDNUp.prototype.url = function () {
     ? this.urls[Math.floor(Math.random() * this.urls.length)]
     : this.urls[0];
 
-  //
-  // Remark: (jcrugzz) If a URL wasnt configured, we guess and use the endpoint for s3.
-  // This may be incorrect but we do this or we error /shrug
-  //
-  prefix = prefix || this.client.config.endpoint;
+  prefix = prefix || (this.client.protocol + this.client.endpoint);
   //
   // Needs to end with `/` or the URL.resolve will replace the last path.
   //
