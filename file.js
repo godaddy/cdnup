@@ -5,6 +5,7 @@
 var debug = require('diagnostics')('cdn:file');
 var reads = require('reads');
 var mime = require('mime');
+var Backoff = require('backo');
 var one = require('one-time');
 
 /**
@@ -17,6 +18,7 @@ var one = require('one-time');
  */
 function File(retries, cdn) {
   this.retries = retries || 5;
+  this.backoff = new Backoff({ min: 100, max: 20000 });
   this.cdn = cdn;
   this.client = cdn.client;
 }
@@ -77,7 +79,7 @@ File.prototype.attempt = function attempt(action, fn) {
     //
     file.retries--;
     debug('recieved a failed attempt, we have %d retries left', file.retries);
-    setImmediate(() => file.attempt(action, fn));
+    setTimeout(() => file.attempt(action, fn), file.backoff.duration());
   }));
 };
 
