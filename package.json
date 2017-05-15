@@ -28,7 +28,7 @@
     "mime": "~1.3.4",
     "mkdirp": "0.5.x",
     "one-time": "0.0.4",
-    "pkgcloud": "~1.4.0",
+    "pkgcloud-aws": "~1.4.1",
     "reads": "~1.0.1"
   },
   "devDependencies": {
