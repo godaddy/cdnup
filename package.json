@@ -5,10 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/*-test.js",
-    "eslint": "godaddy-js-style-eslint -c .eslintrc test/ ./*.js",
-    "jscs": "godaddy-js-style-jscs test/ ./*.js",
-    "lint": "npm run jscs && npm run eslint",
-    "pretest": "npm run lint"
+    "eslint": "eslint-godaddy -c .eslintrc test/ ./*.js",
+    "pretest": "npm run eslint"
   },
   "repository": {
     "type": "git",
@@ -34,7 +32,10 @@
   "devDependencies": {
     "assume": "1.4.x",
     "babel-eslint": "^6.1.2",
-    "godaddy-style": "^3.1.0",
+    "eslint": "^4.4.1",
+    "eslint-config-godaddy": "^2.0.0",
+    "eslint-plugin-json": "^1.2.0",
+    "eslint-plugin-mocha": "^4.11.0",
     "mocha": "2.3.x"
   }
 }

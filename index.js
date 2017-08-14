@@ -1,6 +1,6 @@
 'use strict';
 
-var debug = require('diagnostics')('cdn:up')
+var debug = require('diagnostics')('cdn:up');
 var EventEmitter = require('eventemitter3');
 var File = require('./file');
 var url = require('url');

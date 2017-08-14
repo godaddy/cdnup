@@ -50,8 +50,8 @@ describe('cdnup', function () {
       cdnup.upload(fixture, name, function (err) {
         if (err) return next(err);
 
-        cdnup.client.getFiles(cdnup.bucket, (err, files) => {
-          if (err) return next(err);
+        cdnup.client.getFiles(cdnup.bucket, (error, files) => {
+          if (error) return next(error);
           var filtered = files.filter(f => f.name === name);
           assume(filtered.length).equals(1);
           next();
@@ -64,8 +64,8 @@ describe('cdnup', function () {
       cdnup.upload(fixture, name, function (err) {
         if (err) return next(err);
 
-        cdnup.client.getFiles(cdnup.bucket, (err, files) => {
-          if (err) return next(err);
+        cdnup.client.getFiles(cdnup.bucket, (error, files) => {
+          if (error) return next(error);
           var filtered = files.filter(f => f.name === name);
           assume(filtered.length).equals(1);
           next();
