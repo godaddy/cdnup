@@ -67,8 +67,8 @@ File.prototype.attempt = function attempt(action, fn) {
     if (!err) return fn.apply(this, arguments);
 
     if (err && typeof err === 'string' && /NoSuchBucket/.test(err)) {
-      return file.cdn.init((err) => {
-        if (err) return fn(err);
+      return file.cdn.init((error) => {
+        if (error) return fn(error);
 
         file.attempt(action, fn);
       });
