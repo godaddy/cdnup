@@ -81,5 +81,10 @@ describe('cdnup', function () {
         next();
       });
     });
+
+    it('supports subdomain/true option for the URL it produces', function () {
+      const uri = resolve(cdnup.url(), 'hello-fixture.js');
+      assume(uri).startsWith(`https://${cdnup.prefix}`);
+    });
   });
 });

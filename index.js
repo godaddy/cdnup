@@ -28,6 +28,7 @@ function CDNUp(bucket, options) {
   this.bucket = bucket;
   this.client = pkgcloud.storage.createClient(options.pkgcloud || {});
   this.acl = options.acl || 'public-read';
+  this.subdomain = options.subdomain;
 }
 
 //
@@ -97,11 +98,17 @@ CDNUp.prototype.url = function () {
     ? this.urls[Math.floor(Math.random() * this.urls.length)]
     : this.urls[0];
 
-  prefix = prefix || (this.client.protocol + this.client.endpoint);
+  // Either use the given URL as the root, or if we are using subdomain based
+  // buckets for our given endpoint, append
+  prefix = prefix
+    || (this.client.protocol
+      + (this.subdomain ? `${this.buckett}.` : '')
+      + this.client.endpoint);
   //
   // Needs to end with `/` or the URL.resolve will replace the last path.
   //
-  var root = url.resolve(prefix, this.bucket);
+  var root;
+  if (!this.subdomain) root = url.resolve(prefix, this.bucket);
   if (root.charAt(root.length - 1) !== '/') root = root + '/';
 
   return root;
