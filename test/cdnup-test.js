@@ -93,7 +93,6 @@ describe('cdnup', function () {
       const conf = subdomainConfig();
       const cdn = new CDNUp(conf.prefix, conf);
       const uri = resolve(cdn.url(), 'hello-fixture.js');
-      console.log(uri);
       assume(uri).startsWith(`https://${cdnup.bucket}`);
     });
   });

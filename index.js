@@ -107,7 +107,7 @@ CDNUp.prototype.url = function () {
   //
   // Needs to end with `/` or the URL.resolve will replace the last path.
   //
-  var root = prefix;;
+  var root = prefix;
   if (!this.subdomain) root = url.resolve(prefix, this.bucket);
   if (root.charAt(root.length - 1) !== '/') root = root + '/';
 
