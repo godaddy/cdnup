@@ -36,6 +36,7 @@
     "eslint-config-godaddy": "^2.0.0",
     "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-mocha": "^4.11.0",
+    "clone": "^2.1.1",
     "mocha": "2.3.x"
   }
 }

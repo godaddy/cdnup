@@ -102,12 +102,12 @@ CDNUp.prototype.url = function () {
   // buckets for our given endpoint, append
   prefix = prefix
     || (this.client.protocol
-      + (this.subdomain ? `${this.buckett}.` : '')
+      + (this.subdomain ? `${this.bucket}.` : '')
       + this.client.endpoint);
   //
   // Needs to end with `/` or the URL.resolve will replace the last path.
   //
-  var root;
+  var root = prefix;;
   if (!this.subdomain) root = url.resolve(prefix, this.bucket);
   if (root.charAt(root.length - 1) !== '/') root = root + '/';
 

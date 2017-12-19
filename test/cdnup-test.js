@@ -6,6 +6,7 @@
 describe('cdnup', function () {
 
   var assume = require('assume');
+  var clone = require('clone');
   var CDNUp = require('..');
   var resolve = require('url').resolve;
   var fixture = require('path').resolve(__dirname, 'fixture.js');
@@ -14,12 +15,18 @@ describe('cdnup', function () {
   // we can run tests
   //
   var config = require('./config');
-  var root = 'cdnup';
+  var root = config.prefix || 'cdnup';
   //
   // Define a local var so we override it.
   //
   var cdnup;
 
+  function subdomainConfig() {
+    const conf = clone(config);
+    delete conf.pkgcloud.forceBucketPath;
+    conf.subdomain = true;
+    return conf;
+  }
   //
   // Mounting a drive, can take really long depending on your geographical
   // location.
@@ -83,8 +90,13 @@ describe('cdnup', function () {
     });
 
     it('supports subdomain/true option for the URL it produces', function () {
-      const uri = resolve(cdnup.url(), 'hello-fixture.js');
-      assume(uri).startsWith(`https://${cdnup.prefix}`);
+      const conf = subdomainConfig();
+      const cdn = new CDNUp(conf.prefix, conf);
+      const uri = resolve(cdn.url(), 'hello-fixture.js');
+      console.log(uri);
+      assume(uri).startsWith(`https://${cdnup.bucket}`);
     });
   });
 });
+
+
