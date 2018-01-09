@@ -95,6 +95,15 @@ describe('cdnup', function () {
       const uri = resolve(cdn.url(), 'hello-fixture.js');
       assume(uri).startsWith(`https://${cdnup.bucket}`);
     });
+
+    it('supports check URL replacement', function () {
+      var conf = subdomainConfig();
+      conf.check = `https://${conf.prefix}.s3.amazonaws.com/`;
+      conf.url = `https://whatever.com/whatever-damnit`;
+      const cdn = new CDNUp(conf.prefix, conf);
+      const what  = `https://whatever.com/whatever-damnit/hello-fixture.js`;
+      console.log(cdn.checkUrl(what));
+    });
   });
 });
 
