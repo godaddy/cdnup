@@ -25,6 +25,7 @@ function CDNUp(bucket, options) {
 
   this.sharding = !!options.sharding;
   this.urls = arrayify(options.url || options.urls);
+  this.check = options.check;
   this.bucket = bucket;
   this.client = pkgcloud.storage.createClient(options.pkgcloud || {});
   this.acl = options.acl || 'public-read';
@@ -112,6 +113,21 @@ CDNUp.prototype.url = function () {
   if (root.charAt(root.length - 1) !== '/') root = root + '/';
 
   return root;
+};
+
+/**
+ * Return the URL of the `file` specified to use when checking for the
+ * existence of that file within the CDN. If your CDN is behind a firewall
+ * or other limited network scenario this will be necessary.
+ * @param {String} file File to (potentially) transform.
+ * @returns {String} URL + path to the CDN for the file
+ * @api public
+ */
+CDNUp.prototype.checkUrl = function (file) {
+  if (!this.check) return file;
+
+  const parsed = url.parse(file);
+  return this.check.replace(/\/$/, '') + parsed.pathname;
 };
 
 //
