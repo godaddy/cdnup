@@ -126,6 +126,11 @@ CDNUp.prototype.url = function () {
 CDNUp.prototype.checkUrl = function (file) {
   if (!this.check) return file;
 
+  const uri = this.url();
+  if (file.includes(uri)) {
+    return file.replace(uri, this.check);
+  }
+
   const parsed = url.parse(file);
   return this.check.replace(/\/$/, '') + parsed.pathname;
 };
