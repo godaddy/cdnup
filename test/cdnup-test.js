@@ -102,7 +102,7 @@ describe('cdnup', function () {
       conf.url = `https://whatever.com/whatever-damnit`;
       const cdn = new CDNUp(conf.prefix, conf);
       const what  = `https://whatever.com/whatever-damnit/hello-fixture.js`;
-      console.log(cdn.checkUrl(what));
+      assume(cdn.checkUrl(what)).contains(conf.check);
     });
   });
 });
