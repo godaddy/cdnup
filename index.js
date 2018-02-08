@@ -14,6 +14,7 @@ var pkgcloud = require('pkgcloud-aws');
  * - sharding: Use DNS sharding.
  * - env: Optional forced environment.
  * - url/urls: Array or string of a URL that we use to build our assets URLs
+ * - mime: Custom lookup object.
  *
  * @constructor
  * @param {String} bucket bucket location of where you want the files to be stored.
@@ -25,6 +26,7 @@ function CDNUp(bucket, options) {
 
   this.sharding = !!options.sharding;
   this.urls = arrayify(options.url || options.urls);
+  this.mime = options.mime || {};
   this.check = options.check;
   this.bucket = bucket;
   this.client = pkgcloud.storage.createClient(options.pkgcloud || {});
@@ -43,7 +45,6 @@ CDNUp.prototype.constructor = CDNUp;
  * Init the bucket for the storage container
  *
  * @param {Function} fn Completion callback
- *
  * @returns {CDNUp} The current instance (for fluent/chaining API).
  * @api public
  */
@@ -64,12 +65,11 @@ CDNUp.prototype.init = function init(fn) {
  * @param {Stream|String|Buffer} what Things that needs to uploaded.
  * @param {String} as Name for the file.
  * @param {Function} fn Completion callback.
- *
  * @returns {Object} this The CDN
  * @api public
  */
 CDNUp.prototype.upload = function upload(what, as, fn) {
-  var file = new File(5, this);
+  var file = new File(5, this, { mime: this.mime });
   var cdn = this;
 
   file.create(what, as, function uploaded(err, f) {
@@ -87,6 +87,7 @@ CDNUp.prototype.upload = function upload(what, as, fn) {
 
 /**
  * Return the URL and path we are uploading our files to
+ *
  * @returns {String} URL + path to the CDN
  * @api public
  */
@@ -119,6 +120,7 @@ CDNUp.prototype.url = function () {
  * Return the URL of the `file` specified to use when checking for the
  * existence of that file within the CDN. If your CDN is behind a firewall
  * or other limited network scenario this will be necessary.
+ *
  * @param {String} file File to (potentially) transform.
  * @returns {String} URL + path to the CDN for the file
  * @api public
