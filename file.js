@@ -3,10 +3,11 @@
 /* eslint no-invalid-this: 0 */
 
 var debug = require('diagnostics')('cdn:file');
-var reads = require('reads');
-var mime = require('mime');
 var Backoff = require('backo');
 var one = require('one-time');
+var reads = require('reads');
+var path = require('path');
+var mime = require('mime');
 
 /**
  * Representation of a single file operation for the CDN.
@@ -14,14 +15,37 @@ var one = require('one-time');
  * @constructor
  * @param {Number} retries Amount of retries.
  * @param {CDNUp} cdn CDN reference.
+ * @param {Object} options Additional configuration.
  * @api private
  */
-function File(retries, cdn) {
-  this.retries = retries || 5;
+function File(retries, cdn, options) {
+  options = options || {};
+
   this.backoff = new Backoff({ min: 100, max: 20000 });
-  this.cdn = cdn;
+  this.mime = options.mime || {};
+  this.retries = retries || 5;
   this.client = cdn.client;
+  this.cdn = cdn;
 }
+
+/**
+ * Find the correct contentType for a given filename.
+ *
+ * @param {String} filename Name of the file.
+ * @returns {String} The content type.
+ * @api public
+ */
+File.prototype.contentType = function contentType(filename) {
+  var ext = path.extname(filename);
+
+  //
+  // If we're provided with a custom mime lookup object we should prefer that
+  // over the mime library;
+  //
+  if (ext in this.mime) return this.mime[ext];
+
+  return mime.lookup(filename);
+};
 
 /**
  * Create a new file on the CDN.
@@ -33,8 +57,6 @@ function File(retries, cdn) {
  */
 File.prototype.create = function create(what, as, fn) {
   var file = this;
-  // Use the target as the `what` could be a stream
-  var type = mime.lookup(as);
 
   this.attempt(function attempt(next) {
     debug('attempting to write file to cdn: %s', as);
@@ -43,7 +65,7 @@ File.prototype.create = function create(what, as, fn) {
         acl: file.cdn.acl,
         container: file.cdn.bucket,
         remote: as,
-        contentType: type
+        contentType: file.contentType(as)
       }))
       .once('error', next)
       .once('success', next.bind(null, null));
@@ -55,7 +77,6 @@ File.prototype.create = function create(what, as, fn) {
  *
  * @param {Function} action Function that needs to do something that can be retried.
  * @param {Function} fn Completion callback if we run out of reties.
- *
  * @returns {Object} the result of calling fn with the specified 'this' value
  * @api private
  */
