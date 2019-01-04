@@ -4,7 +4,7 @@ var debug = require('diagnostics')('cdn:up');
 var EventEmitter = require('eventemitter3');
 var File = require('./file');
 var url = require('url');
-var pkgcloud = require('pkgcloud-aws');
+var pkgcloud = require('pkgcloud');
 
 /**
  * CDNup is our CDN management API.
