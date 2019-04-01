@@ -30,9 +30,7 @@ function CDNUp(bucket, options) {
   this.check = options.check;
   this.bucket = bucket;
   this.client = pkgcloud.storage.createClient(options.pkgcloud || {});
-  if ('acl' in options) {
-    this.acl = options.acl || 'public-read';
-  }
+  this.acl = options.acl;
   this.subdomain = options.subdomain;
 }
 
