@@ -93,8 +93,8 @@ CDNUp.prototype.upload = function upload(what, as, fn) {
  */
 CDNUp.prototype.url = function () {
   //
-  // Figure out which subdomain/url prefix we want to use so assets can
-  // maximize the
+  // Figure out which subdomain/url prefix we want to use so browsers can
+  // maximize the number of concurrent downloaded assets.
   //
   var prefix = this.sharding
     ? this.urls[Math.floor(Math.random() * this.urls.length)]

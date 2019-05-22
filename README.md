@@ -1,4 +1,10 @@
-# cdnup
+# `cdnup`
+
+[![Version npm](https://img.shields.io/npm/v/cdnup.svg?style=flat-square)](https://www.npmjs.com/package/cdnup)
+[![License](https://img.shields.io/npm/l/cdnup.svg?style=flat-square)](https://github.com/warehouseai/cdnup/blob/master/LICENSE)
+[![npm Downloads](https://img.shields.io/npm/dm/cdnup.svg?style=flat-square)](https://npmcharts.com/compare/cdnup?minimal=true)
+[![Build Status](https://travis-ci.org/warehouseai/cdnup.svg?branch=master)](https://travis-ci.org/warehouseai/cdnup)
+[![Dependencies](https://img.shields.io/david/warehouseai/cdnup.svg?style=flat-square)](https://github.com/warehouseai/cdnup/blob/master/package.json)
 
 CDNup is a simple wrapper around `pkgcloud` which allows for a simple uploading
 interface as well as the ability to define a CDN URL that fronts whereever you
@@ -18,9 +24,9 @@ module as followed:
 ```js
 'use strict';
 
-var CDNUp = require('cdnup');
+const CDNUp = require('cdnup');
 
-var cdnup = new CDNUp('bucket-name', {
+const cdnup = new CDNUp('bucket-name', {
   //
   // It is still assumed that the `bucket-name` prefix is appended to the
   // following url
@@ -32,14 +38,18 @@ var cdnup = new CDNUp('bucket-name', {
 
 As you can see in the example above we allow 2 arguments in the constructor:
 
-1. `root`: The relative path to the files on the CDN server.
+1. `bucket`: The relative path to the files on the CDN server.
 2. `options`: Optional configuration object. The following keys are supported:
   - `sharding`: Randomly select one of the supplied `urls` of the CDN so assets
     can be sharded between different DNS/subdomains.
   - `url/urls`: A url string or urls array for what you will use to publicly
     fetch assets from the CDN.
+  - `subdomain`: Boolean indicating the `bucket` should be used as subdomain.
+  - `pkgcloud`: Options passed to `pkgcloud` constructor.
+  - `mime`: Object containing custom mime types per file type.
+  - `check`: Used to validate asset URL if the CDN assets are behind a firewall.
 
-#### Authorization
+### Authorization
 
 We use [`pkgcloud`][pkgcloud] in order to upload CDN assets. It supports most if
 not all cloud providers depending on what you use and who you want to trust with
@@ -47,7 +57,7 @@ your assets. Check out the documentation and our sample config to see how you
 may set this up for you.
 
 ```js
-var cdnup = new CDNUp('ux/core', {
+const cdnup = new CDNUp('ux/core', {
   pkgcloud: {
     provider: 'amazon',
     //...
@@ -59,7 +69,7 @@ var cdnup = new CDNUp('ux/core', {
 
 The following API methods are available.
 
-#### upload
+### upload
 
 This is the method that you will be using the most, `upload`. When you first
 call the method it might take a second to work because it will first create the
@@ -81,7 +91,7 @@ cdnup.upload('/path/to/file.js', 'file.js', function (err) {
 });
 ```
 
-#### init
+### init
 
 Initialize the cloud provider with the given `bucket-name` passed to the
 constructor.
@@ -92,8 +102,28 @@ cdnup.init(function (err) {
 });
 ```
 
-## License
+### url
 
-MIT
+Return the URL and path of the CDN.
+
+```js
+const fullCDNPath = cdnup.url();
+```
+
+### checkUrl
+
+Return the URL of the `file` specified against the configured `check`.
+
+```js
+const cdn = new CDNUp('my-bucket', {
+  check: 'https://my-bucket.s3.amazonaws.com/',
+  url: 'https://whatever.com/whatever-damnit'
+});
+
+// Will be rewritten against the specific `check`.
+const fileURL = cdn.checkUrl('https://whatever.com/whatever-damnit/hello-fixture.js');
+```
+
+### Test
 
 [pkgcloud]: https://github.com/pkgcloud/pkgcloud
