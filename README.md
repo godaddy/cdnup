@@ -18,14 +18,13 @@ npm install --save cdnup
 
 ## Usage
 
-In all examples we assume that you've already required and initialized the
-module as followed:
+You can refer to [BFFS] to see `cdnup` in action. In all examples below we
+assume that you've already required and initialized the module as followed:
 
 ```js
 'use strict';
 
 const CDNUp = require('cdnup');
-
 const cdnup = new CDNUp('bucket-name', {
   //
   // It is still assumed that the `bucket-name` prefix is appended to the
@@ -59,11 +58,15 @@ may set this up for you.
 ```js
 const cdnup = new CDNUp('ux/core', {
   pkgcloud: {
-    provider: 'amazon',
+    provider: 'amazon',   // Use AWS s3
+    forcePathBucket:      // Inform AWS to use `s3ForcePathStyle`
     //...
   }
 });
 ```
+
+Note: more information about [`forcePathBucket` is available in AWS
+documentation][forcepath].
 
 ## API
 
@@ -131,3 +134,5 @@ npm test
 ```
 
 [pkgcloud]: https://github.com/pkgcloud/pkgcloud
+[forcepath]: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#s3ForcePathStyle-property
+[BFFS]: https://github.com/warehouseai/bffs/blob/84354709fc0dc909341d72fed1466b46b130f655/index.js#L105-L118
