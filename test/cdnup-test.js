@@ -10,11 +10,7 @@ describe('cdnup', function () {
   var CDNUp = require('..');
   var resolve = require('url').resolve;
   var fixture = require('path').resolve(__dirname, 'fixture.js');
-  //
-  // TODO: Make this a private encrypted config on travis with an s3 bucket so
-  // we can run tests
-  //
-  var config = require('./config');
+  var config = require('./mock-config');
   var root = config.prefix || 'cdnup';
   //
   // Define a local var so we override it.

@@ -126,4 +126,8 @@ const fileURL = cdn.checkUrl('https://whatever.com/whatever-damnit/hello-fixture
 
 ### Test
 
+```bash
+npm test
+```
+
 [pkgcloud]: https://github.com/pkgcloud/pkgcloud
