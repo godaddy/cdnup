@@ -117,11 +117,11 @@ Return the URL of the `file` specified against the configured `check`.
 ```js
 const cdn = new CDNUp('my-bucket', {
   check: 'https://my-bucket.s3.amazonaws.com/',
-  url: 'https://whatever.com/whatever-damnit'
+  url: 'https://whatever.com/world'
 });
 
 // Will be rewritten against the specific `check`.
-const fileURL = cdn.checkUrl('https://whatever.com/whatever-damnit/hello-fixture.js');
+const fileURL = cdn.checkUrl('https://whatever.com/world/hello-fixture.js');
 ```
 
 ### Test
