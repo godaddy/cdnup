@@ -10,11 +10,7 @@ describe('cdnup', function () {
   var CDNUp = require('..');
   var resolve = require('url').resolve;
   var fixture = require('path').resolve(__dirname, 'fixture.js');
-  //
-  // TODO: Make this a private encrypted config on travis with an s3 bucket so
-  // we can run tests
-  //
-  var config = require('./config');
+  var config = require('./mock-config');
   var root = config.prefix || 'cdnup';
   //
   // Define a local var so we override it.
@@ -99,9 +95,9 @@ describe('cdnup', function () {
     it('supports check URL replacement', function () {
       var conf = subdomainConfig();
       conf.check = `https://${conf.prefix}.s3.amazonaws.com/`;
-      conf.url = `https://whatever.com/whatever-damnit`;
+      conf.url = `https://whatever.com/world`;
       const cdn = new CDNUp(conf.prefix, conf);
-      const what  = `https://whatever.com/whatever-damnit/hello-fixture.js`;
+      const what  = `https://whatever.com/world/hello-fixture.js`;
       assume(cdn.checkUrl(what)).contains(conf.check);
     });
   });
