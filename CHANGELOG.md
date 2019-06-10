@@ -8,5 +8,6 @@
   - Update dependencies
 
 [#8]: https://github.com/warehouseai/cdnup/issues/8
+[#13]: https://github.com/warehouseai/cdnup/pull/13
 
 [#12]: https://github.com/warehouseai/extract-config/pull/12
