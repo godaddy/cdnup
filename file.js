@@ -73,7 +73,7 @@ File.prototype.create = function create(what, as, fn) {
   this.attempt(function attempt(next) {
     debug('attempting to write file to cdn: %s', as);
 
-    const { type, enc } = this.contentDetect(as);
+    const { type, enc } = file.contentDetect(as);
     const opts = {
       acl: file.cdn.acl,
       container: file.cdn.bucket,
