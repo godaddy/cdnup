@@ -8,9 +8,10 @@ describe('File', function () {
     it('looks up the content type', function () {
       var file = new File(5, {}, {});
 
-      assume(file.contentType('hello.js')).equals('application/javascript');
-      assume(file.contentType('hello.html')).equals('text/html');
-      assume(file.contentType('hello.dfadfasdf')).equals('application/octet-stream');
+      assume(file.contentDetect('hello.js').type).equals('application/javascript');
+      assume(file.contentDetect('hello.html').type).equals('text/html');
+      assume(file.contentDetect('hello.dfadfasdf').type).equals('application/octet-stream');
+      assume(file.contentDetect('hello.js.gz')).eql({ type: 'application/javascript', enc: 'gzip' });
     });
 
     it('allows prefers override over `mime` library', function () {
@@ -21,8 +22,8 @@ describe('File', function () {
         }
       });
 
-      assume(file.contentType('hello.html')).equals('fake/news');
-      assume(file.contentType('hello.svgs')).equals('text/plain');
+      assume(file.contentDetect('hello.html').type).equals('fake/news');
+      assume(file.contentDetect('hello.svgs').type).equals('text/plain');
     });
   });
 });
