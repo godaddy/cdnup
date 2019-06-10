@@ -1,10 +1,13 @@
 # Changelog
 
+- [#13] new file.contentEncoding API to replace file.contentType
+
 - [#12] Add collected documentation and badges.
   - Fixes issue [#8]
   - Document missing API methods
   - Update dependencies
 
 [#8]: https://github.com/warehouseai/cdnup/issues/8
+[#13]: https://github.com/warehouseai/cdnup/pull/13
 
 [#12]: https://github.com/warehouseai/extract-config/pull/12

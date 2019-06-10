@@ -29,23 +29,35 @@ function File(retries, cdn, options) {
 }
 
 /**
- * Find the correct contentType for a given filename.
+ * Find the correct contentType and optional contentEncoding for a given filename.
  *
  * @param {String} filename Name of the file.
  * @returns {String} The content type.
  * @api public
  */
-File.prototype.contentType = function contentType(filename) {
-  var ext = path.extname(filename);
+File.prototype.contentDetect = function contentType(filename) {
+  const { ext, name } = path.parse(filename);
+  const gz = ext === '.gz';
+  let type, enc;
 
   //
   // If we're provided with a custom mime lookup object we should prefer that
   // over the mime library;
   //
-  if (ext in this.mime) return this.mime[ext];
+  if (ext in this.mime) type = this.mime[ext];
 
-  return mime.lookup(filename);
+  // Unlikely to conficlt with overrides above. Includes properly setting the
+  // contentType and contentEncoding for given gzipped files
+  if (gz && name.includes('.')) {
+    type = mime.lookup(name);
+    enc = 'gzip';
+  }
+
+  type = type || mime.lookup(ext);
+
+  return { type, enc };
 };
+
 
 /**
  * Create a new file on the CDN.
@@ -60,13 +72,19 @@ File.prototype.create = function create(what, as, fn) {
 
   this.attempt(function attempt(next) {
     debug('attempting to write file to cdn: %s', as);
+
+    const { type, enc } = file.contentDetect(as);
+    const opts = {
+      acl: file.cdn.acl,
+      container: file.cdn.bucket,
+      remote: as
+    };
+
+    if (type) opts.contentType = type;
+    if (enc) opts.contentEncoding = enc;
+
     reads(what)
-      .pipe(file.client.upload({
-        acl: file.cdn.acl,
-        container: file.cdn.bucket,
-        remote: as,
-        contentType: file.contentType(as)
-      }))
+      .pipe(file.client.upload(opts))
       .once('error', next)
       .once('success', next.bind(null, null));
   }, fn);
