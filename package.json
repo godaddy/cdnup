@@ -26,7 +26,7 @@
     "mime": "^1.6.0",
     "mkdirp": "0.5.x",
     "one-time": "0.0.4",
-    "pkgcloud": "^1.7.0",
+    "pkgcloud": "^2.1.0",
     "reads": "~1.0.1"
   },
   "devDependencies": {
