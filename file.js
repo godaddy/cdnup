@@ -94,14 +94,14 @@ File.prototype.create = function create(what, as, fn) {
  * Poor mans retry handler.
  *
  * @param {Function} action Function that needs to do something that can be retried.
- * @param {Function} fn Completion callback if we run out of reties.
+ * @param {Function} fn Completion callback if we run out of retries.
  * @returns {Object} the result of calling fn with the specified 'this' value
  * @api private
  */
 File.prototype.attempt = function attempt(action, fn) {
   var file = this;
 
-  if (!file.retries) return fn(new Error('Max retires exhausted'));
+  if (!file.retries) return fn(new Error('Max retries exhausted'));
   if (file.retries) action(one(function next(err) {
     if (!err) return fn.apply(this, arguments);
 
