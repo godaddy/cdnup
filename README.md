@@ -129,6 +129,16 @@ const fileURL = cdn.checkUrl('https://whatever.com/world/hello-fixture.js');
 
 ### Test
 
+Run AWS local, pull `latest` [localstack].
+This requires `docker` [to be setup][docker].
+
+```sh
+docker pull localstack/localstack:latest
+npm run localstack
+```
+
+Finally, run the unit test.
+
 ```bash
 npm test
 ```
@@ -136,3 +146,4 @@ npm test
 [pkgcloud]: https://github.com/pkgcloud/pkgcloud
 [forcepath]: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#s3ForcePathStyle-property
 [BFFS]: https://github.com/warehouseai/bffs/blob/84354709fc0dc909341d72fed1466b46b130f655/index.js#L105-L118
+[localstack]: https://github.com/localstack/localstack

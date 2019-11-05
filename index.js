@@ -106,6 +106,7 @@ CDNUp.prototype.url = function () {
     || (this.client.protocol
       + (this.subdomain ? `${this.bucket}.` : '')
       + this.client.endpoint);
+
   //
   // Needs to end with `/` or the URL.resolve will replace the last path.
   //

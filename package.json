@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha test/*-test.js",
     "eslint": "eslint-godaddy -c .eslintrc test/ ./*.js",
-    "pretest": "npm run eslint"
+    "posttest": "npm run eslint",
+    "localstack": "docker run -it -p 4572:4572 --rm localstack/localstack"
   },
   "repository": {
     "type": "git",
