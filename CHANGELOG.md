@@ -1,8 +1,12 @@
 # Changelog
 
-- [#16] Ensure unit tests can run and fix error detection for missing bucket
-- [#13] new file.contentEncoding API to replace file.contentType
+### 4.0.1
 
+- [#16] Ensure unit tests can run and fix error detection for missing bucket
+
+### 4.0.0
+
+- [#13] new file.contentEncoding API to replace file.contentType
 - [#12] Add collected documentation and badges.
   - Fixes issue [#8]
   - Document missing API methods
