@@ -105,7 +105,7 @@ File.prototype.attempt = function attempt(action, fn) {
   if (file.retries) action(one(function next(err) {
     if (!err) return fn.apply(this, arguments);
 
-    if (err && typeof err === 'string' && /NoSuchBucket/.test(err)) {
+    if (err && err.code === 'NoSuchBucket') {
       return file.cdn.init((error) => {
         if (error) return fn(error);
 
