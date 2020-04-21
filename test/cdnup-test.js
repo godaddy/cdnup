@@ -43,6 +43,19 @@ describe('cdnup', function () {
     });
   });
 
+  describe('uploadOpts', function () {
+    var cdn = new CDNUp(root, {
+      ...clone(config),
+      uploadOpts: {
+        cacheControl: 'max-age=1209600'
+      }
+    });
+
+    it('sets uploadOpts', function () {
+      assume(cdn.uploadOpts.cacheControl).equals('max-age=1209600');
+    });
+  });
+
   describe('#upload', function () {
     it('creates a connection with the server', function (next) {
       var name = 'uploaded-fixture.js';

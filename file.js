@@ -79,7 +79,7 @@ File.prototype.create = function create(what, as, fn) {
       acl: file.cdn.acl,
       container: file.cdn.bucket,
       remote: as,
-      ...this.uploadOpts
+      ...file.uploadOpts
     };
 
     if (type) opts.contentType = type;
