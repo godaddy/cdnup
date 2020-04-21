@@ -4,10 +4,10 @@
   "description": "CDN Uploading for everyone",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*-test.js",
+    "test": "mocha -r test/setup.js test/*-test.js",
     "eslint": "eslint-godaddy -c .eslintrc test/ ./*.js",
     "posttest": "npm run eslint",
-    "localstack": "docker run -it -p 4572:4572 --rm localstack/localstack"
+    "localstack": "docker run -it -e SERVICES=s3 -p 4572:4572 --rm localstack/localstack"
   },
   "repository": {
     "type": "git",
@@ -32,11 +32,14 @@
   },
   "devDependencies": {
     "assume": "1.4.x",
+    "assume-sinon": "^1.0.1",
+    "aws-liveness": "^1.1.1",
     "clone": "^2.1.2",
     "eslint": "^5.16.0",
     "eslint-config-godaddy": "^3.0.0",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^5.3.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "sinon": "^9.0.2"
   }
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+- Add uploadOpts option
+- Enable travis CI appropriately
+- Make tests work locally more out of the box
+
 ### 4.0.1
 
 - [#16] Ensure unit tests can run and fix error detection for missing bucket

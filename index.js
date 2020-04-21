@@ -32,6 +32,7 @@ function CDNUp(bucket, options) {
   this.client = pkgcloud.storage.createClient(options.pkgcloud || {});
   this.acl = options.acl;
   this.subdomain = options.subdomain;
+  this.uploadOpts = options.uploadOpts || {};
 }
 
 //
@@ -69,8 +70,11 @@ CDNUp.prototype.init = function init(fn) {
  * @api public
  */
 CDNUp.prototype.upload = function upload(what, as, fn) {
-  var file = new File(5, this, { mime: this.mime });
   var cdn = this;
+  var file = new File(5, this, {
+    uploadOpts: this.uploadOpts,
+    mime: this.mime
+  });
 
   file.create(what, as, function uploaded(err, f) {
     if (err) return fn(err);
