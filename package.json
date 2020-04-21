@@ -33,6 +33,7 @@
   "devDependencies": {
     "assume": "1.4.x",
     "assume-sinon": "^1.0.1",
+    "aws-liveness": "^1.1.1",
     "clone": "^2.1.2",
     "eslint": "^5.16.0",
     "eslint-config-godaddy": "^3.0.0",

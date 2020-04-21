@@ -4,7 +4,9 @@
 /* eslint no-invalid-this: 0 */
 
 describe('cdnup', function () {
-
+  this.timeout(60000);
+  var AwsLiveness = require('aws-liveness');
+  var { S3 } = require('aws-sdk');
   var assume = require('assume');
   var clone = require('clone');
   var CDNUp = require('..');
@@ -25,6 +27,13 @@ describe('cdnup', function () {
 
     return conf;
   }
+  cdnup = new CDNUp(root, config);
+  before(async function () {
+    await new AwsLiveness().waitForServices({
+      clients: [new S3(cdnup.client._awsConfig)],
+      waitSeconds: 60
+    });
+  });
 
   beforeEach(function () {
     cdnup = new CDNUp(root, config);
