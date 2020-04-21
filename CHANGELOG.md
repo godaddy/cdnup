@@ -1,5 +1,7 @@
 # Changelog
 
+### 4.1.0
+
 - Add uploadOpts option
 - Enable travis CI appropriately
 - Make tests work locally more out of the box

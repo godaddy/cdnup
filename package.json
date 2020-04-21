@@ -1,6 +1,6 @@
 {
   "name": "cdnup",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "CDN Uploading for everyone",
   "main": "index.js",
   "scripts": {
