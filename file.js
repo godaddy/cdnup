@@ -22,6 +22,7 @@ function File(retries, cdn, options) {
   options = options || {};
 
   this.backoff = new Backoff({ min: 100, max: 20000 });
+  this.uploadOpts = options.uploadOpts || {};
   this.mime = options.mime || {};
   this.retries = retries || 5;
   this.client = cdn.client;
@@ -77,7 +78,8 @@ File.prototype.create = function create(what, as, fn) {
     const opts = {
       acl: file.cdn.acl,
       container: file.cdn.bucket,
-      remote: as
+      remote: as,
+      ...this.uploadOpts
     };
 
     if (type) opts.contentType = type;
