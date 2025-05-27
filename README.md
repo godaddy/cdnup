@@ -1,5 +1,7 @@
 # `cdnup`
 
+> ⚠️ **DEPRECATED**: This package is no longer maintained and has been deprecated. Please use an alternative solution or contact the maintainers for more information.
+
 [![Version npm](https://img.shields.io/npm/v/cdnup.svg?style=flat-square)](https://www.npmjs.com/package/cdnup)
 [![License](https://img.shields.io/npm/l/cdnup.svg?style=flat-square)](https://github.com/warehouseai/cdnup/blob/master/LICENSE)
 [![npm Downloads](https://img.shields.io/npm/dm/cdnup.svg?style=flat-square)](https://npmcharts.com/compare/cdnup?minimal=true)
